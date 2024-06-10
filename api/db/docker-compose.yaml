@@ -1,0 +1,25 @@
+volumes:
+  data:
+services:
+#aqui seria o nome do servidor, substitua o DB, não é preciso
+  db:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+    #aqui pode selecionar o user=root e a senha para realizar o login de
+    #altera a senha trocando o password
+      - MYSQL_ROOT_PASSWORD=password
+      #nome do banco substitua o app_developement
+      - MYSQL_DATABASE=app_development
+  app:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+    #nome relacionado ao servido conforme linha 5
+      - db
+    ports:
+      - 80:80
+    environment:
+      - PMA_ARBITRARY=1
